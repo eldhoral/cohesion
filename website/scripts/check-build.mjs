@@ -111,6 +111,10 @@ const rules = {
     for (const [r, lang] of [['/about/team/', 'en'], ['/id/about/team/', 'id']]) {
       const h = pages[r];
       if (!h) { f.push(`${r}: page missing`); continue; }
+      const t0 = text(h);
+      const wrong = lang === 'en' ? ['Pembina', 'Penasihat', 'Pengurus', 'Pengawas'] : ['Board of Trustees', 'Board of Advisors', 'Board of Management', 'Board of Supervisors'];
+      for (const w of wrong) if (t0.includes(w)) f.push(`${r}: group names must be in the page language only, found "${w}"`);
+      for (const w of ['being prepared', 'sedang disiapkan']) if (t0.includes(w)) f.push(`${r}: remove the "advisors are being prepared" note, found "${w}"`);
       const groups = [...h.matchAll(/data-group="([a-z]+)"/g)].map((m) => m[1]);
       if (groups.join() !== 'trustees,advisors,management,supervisor') f.push(`${r}: groups wrong: ${groups.join(',')}`);
       const cards = [...h.matchAll(/data-person="([a-z-]+)"/g)].map((m) => m[1]);

@@ -126,7 +126,6 @@ export const en = {
     subtitle: 'People from health, food and nutrition, education, the environment and management lead and guide COHESION.',
     viewProfile: 'View profile',
     back: 'Back to team',
-    advisorsNote: 'Photos and profiles of our advisors are being prepared.',
     crumbAbout: 'About Us',
   },
   work: {

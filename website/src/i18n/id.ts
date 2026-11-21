@@ -128,7 +128,6 @@ export const id: typeof en = {
     subtitle: 'Para ahli di bidang kesehatan, pangan dan gizi, pendidikan, lingkungan, dan manajemen memimpin serta membimbing COHESION.',
     viewProfile: 'Lihat profil',
     back: 'Kembali ke tim',
-    advisorsNote: 'Foto dan profil para penasihat sedang disiapkan.',
     crumbAbout: 'Tentang Kami',
   },
   work: {
