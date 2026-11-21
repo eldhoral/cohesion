@@ -76,7 +76,7 @@ test('team groups appear in governance order', () => {
 
 test('every stock photo has alt text in both languages, a credit and a file on disk', () => {
   const keys = Object.keys(photos);
-  assert.equal(keys.length, 15);
+  assert.equal(keys.length, 21);
   for (const [key, p] of Object.entries(photos)) {
     assert.ok(p.alt.en.trim() && p.alt.id.trim(), `${key} alt`);
     assert.ok(p.credit.author.trim(), `${key} author`);

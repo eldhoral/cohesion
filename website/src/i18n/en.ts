@@ -110,7 +110,6 @@ export const en = {
     },
     tilesLabel: 'What our work touches',
     tiles: { wheat: 'Wheat', rice: 'Rice', salt: 'Salt', leaf: 'Environment', plate: 'Healthy plate', school: 'School bench' },
-    deed: { title: 'Notarial Deed No. 09 · 28 October 2026', by: 'Nurlela SH, Notary and PPAT' },
     structure: {
       eyebrow: 'Our structure',
       title: 'Six divisions, one per area of work',

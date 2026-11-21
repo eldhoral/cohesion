@@ -17,3 +17,9 @@ All stock photos are from [Unsplash](https://unsplash.com) under the Unsplash li
 - `education.jpg`: ochimax studio, https://unsplash.com/photos/OrYcBjIzb3M
 - `update1.jpg`: Camylla Battani, https://unsplash.com/photos/ABVE1cyT7hk
 - `update2.jpg`: Antonio Janeski, https://unsplash.com/photos/CHVTt0aGbx0
+- `tile-wheat.jpg`: B S, https://unsplash.com/photos/Q2Z6BnGn0ys
+- `tile-rice.jpg`: Pierre Bamin, https://unsplash.com/photos/-LdilhDx3sk
+- `tile-salt.jpg`: Timo Volz, https://unsplash.com/photos/lPaVwVGDQUs
+- `tile-leaf.jpg`: Rémi Walle, https://unsplash.com/photos/Ui3bOgnjtl0
+- `tile-plate.jpg`: Anna Pelzer, https://unsplash.com/photos/IGfIGP5ONV0
+- `tile-school.jpg`: 2y.kang, https://unsplash.com/photos/dFohf_GUZJ0

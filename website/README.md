@@ -39,6 +39,6 @@ Deploy the `dist/` folder to any static host. English pages are at `/`, Indonesi
 2. Whether the organization profile PDF will get an Indonesian version.
 3. Real dates, photos and text for the two updates on Our Work and Home.
 4. Review of the Indonesian copy (list in `../docs/superpowers/plans/id-copy-review.md`).
-5. Confirm the illustration tiles on About Us (wheat, rice, salt, environment, healthy plate, school bench) are what Eriana meant by "alternatives".
-6. Confirm the Notarial Deed card and the "rooted in Depok" wording stay on About Us.
+5. Confirm the photo tiles on About Us (wheat, rice, salt, environment, healthy plate, school bench) are what Eriana meant by "alternatives".
+6. Confirm the "rooted in Depok" wording stays on About Us. (The Notarial Deed card was removed at the client's request.)
 7. Which host is canonical: `cohesion-foundation.org` (used now) or `www.`; change `site` in `astro.config.mjs` and `src/config.ts`.

@@ -19,6 +19,12 @@ export const photos = {
   education: { file: "education.jpg", alt: { en: "Children posing together in a classroom", id: "Anak-anak berpose bersama di dalam kelas" }, credit: { author: "ochimax studio", url: "https://unsplash.com/photos/OrYcBjIzb3M" } },
   update1: { file: "update1.jpg", alt: { en: "Hands joined together in the middle of a circle", id: "Tangan-tangan bertemu di tengah lingkaran" }, credit: { author: "Camylla Battani", url: "https://unsplash.com/photos/ABVE1cyT7hk" } },
   update2: { file: "update2.jpg", alt: { en: "Fists bumped together over a desk", id: "Kepalan tangan beradu di atas meja" }, credit: { author: "Antonio Janeski", url: "https://unsplash.com/photos/CHVTt0aGbx0" } },
+  tileWheat: { file: "tile-wheat.jpg", alt: { en: "Golden wheat stalks in a field", id: "Batang gandum keemasan di ladang" }, credit: { author: "B S", url: "https://unsplash.com/photos/Q2Z6BnGn0ys" } },
+  tileRice: { file: "tile-rice.jpg", alt: { en: "Raw white rice grains", id: "Butir beras putih" }, credit: { author: "Pierre Bamin", url: "https://unsplash.com/photos/-LdilhDx3sk" } },
+  tileSalt: { file: "tile-salt.jpg", alt: { en: "A tiled salt field", id: "Ladang garam" }, credit: { author: "Timo Volz", url: "https://unsplash.com/photos/lPaVwVGDQUs" } },
+  tileLeaf: { file: "tile-leaf.jpg", alt: { en: "Green leaves", id: "Daun hijau" }, credit: { author: "Rémi Walle", url: "https://unsplash.com/photos/Ui3bOgnjtl0" } },
+  tilePlate: { file: "tile-plate.jpg", alt: { en: "A bowl of fresh vegetables", id: "Semangkuk sayuran segar" }, credit: { author: "Anna Pelzer", url: "https://unsplash.com/photos/IGfIGP5ONV0" } },
+  tileSchool: { file: "tile-school.jpg", alt: { en: "An empty classroom with wooden desks", id: "Ruang kelas kosong dengan bangku kayu" }, credit: { author: "2y.kang", url: "https://unsplash.com/photos/dFohf_GUZJ0" } },
 } satisfies Record<string, Photo>;
 
 export type PhotoKey = keyof typeof photos;

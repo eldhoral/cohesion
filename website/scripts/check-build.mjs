@@ -92,13 +92,15 @@ const rules = {
       if (divs.join() !== AREA_ORDER.join()) f.push(`${r}: divisions wrong or out of order: ${divs.join(',')}`);
       const t = text(h);
       for (const bad of ['Head:', '[TBC]', 'Lanny', 'Tohom', 'Verdi']) if (t.includes(bad)) f.push(`${r}: must not contain "${bad}"`);
-      if (!t.includes(lang === 'en' ? 'Notarial Deed No. 09' : 'Akta Notaris No. 09')) f.push(`${r}: notarial deed card missing`);
-      if (!t.includes('Nurlela SH') || t.includes('Nurtela')) f.push(`${r}: the notary is "Nurlela SH" (checked against the mockup)`);
+      for (const bad of ['Notarial Deed', 'Akta Notaris', 'Nurlela', 'Nurtela']) if (t.includes(bad)) f.push(`${r}: the notarial deed card was removed at the client's request; found "${bad}"`);
       if (!t.includes(lang === 'en' ? 'broad range of stakeholders' : 'beragam pemangku kepentingan')) f.push(`${r}: About text must come from the final organization profile`);
       if (h.includes('timeline')) f.push(`${r}: the old timeline structure must be gone`);
       const tiles = [...h.matchAll(/data-tile="([a-z]+)"/g)].map((m) => m[1]);
       if (tiles.join() !== 'wheat,rice,salt,leaf,plate,school') f.push(`${r}: illustration tiles wrong: ${tiles.join(',')}`);
       if (count(h, /class="tile__label/g) !== 6) f.push(`${r}: every tile needs a visible label`);
+      const tileHtml = [...h.matchAll(/<li class="tile[^>]*data-tile="[a-z]+"[^>]*>([\s\S]*?)<\/li>/g)].map((m) => m[1]);
+      if (tileHtml.length !== 6 || tileHtml.some((x) => !/<img /.test(x))) f.push(`${r}: every tile must show a photo, not an icon`);
+      if (tileHtml.some((x) => /<svg/.test(x))) f.push(`${r}: tiles must not use svg icons`);
     }
     return f;
   },

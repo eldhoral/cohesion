@@ -112,7 +112,6 @@ export const id: typeof en = {
     },
     tilesLabel: 'Hal-hal yang kami sentuh',
     tiles: { wheat: 'Gandum', rice: 'Beras', salt: 'Garam', leaf: 'Lingkungan', plate: 'Piring makan sehat', school: 'Bangku sekolah' },
-    deed: { title: 'Akta Notaris No. 09 · 28 Oktober 2026', by: 'Nurlela SH, Notaris dan PPAT' },
     structure: {
       eyebrow: 'Struktur kami',
       title: 'Enam bidang, masing-masing untuk satu area kerja',
