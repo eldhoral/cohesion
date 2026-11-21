@@ -102,7 +102,7 @@ export const id: typeof en = {
   },
   about: {
     title: 'Tentang Kami',
-    description: 'Bagaimana COHESION diorganisasi, latar belakangnya, dan enam bidang yang menjalankan pekerjaannya.',
+    description: 'Bagaimana COHESION diorganisasi, latar belakangnya, serta orang-orang yang memimpin dan membimbingnya.',
     subtitle: 'Latar belakang kami, bagaimana COHESION diorganisasi, dan orang-orang yang memimpin serta membimbingnya.',
     bg: {
       eyebrow: 'Latar belakang',
@@ -111,21 +111,13 @@ export const id: typeof en = {
       p2: 'COHESION menyatukan bukti, keahlian teknis, penguatan kapasitas, dan kolaborasi untuk menjawab tantangan pembangunan dan mendorong solusi yang praktis dan berkelanjutan. Melalui kemitraan dan keterlibatan lintas sektor, yayasan mendukung para pemangku kepentingan dan komunitas dalam memperkuat program, membangun kapasitas kelembagaan dan komunitas, serta memajukan pembangunan yang inklusif dan berkelanjutan.',
     },
     tilesLabel: 'Hal-hal yang kami sentuh',
-    structure: {
-      eyebrow: 'Struktur kami',
-      title: 'Enam bidang, masing-masing untuk satu area kerja',
-      text: 'Setiap bidang memimpin salah satu area kerja kami.',
-    },
     team: {
       title: 'Kenali orang-orang yang memimpin dan membimbing COHESION',
       text: 'Pembina, penasihat, pengurus, dan pengawas yang berpengalaman di bidang kesehatan, pangan dan gizi, pendidikan, dan lingkungan.',
-      button: 'Kenali tim kami',
     },
   },
   team: {
     title: 'Tim Kami',
-    description: 'Pembina, penasihat, pengurus, dan pengawas yang memimpin serta membimbing COHESION.',
-    subtitle: 'Para ahli di bidang kesehatan, pangan dan gizi, pendidikan, lingkungan, dan manajemen memimpin serta membimbing COHESION.',
     viewProfile: 'Lihat profil',
     back: 'Kembali ke tim',
     crumbAbout: 'Tentang Kami',

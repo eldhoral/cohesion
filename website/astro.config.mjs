@@ -8,6 +8,8 @@ export default defineConfig({
   site: 'https://cohesion-foundation.org', // keep in sync with src/config.ts
   trailingSlash: 'always',
   build: { format: 'directory' },
+  // the team now lives on the About page
+  redirects: { '/about/team': '/about/', '/id/about/team': '/id/about/' },
   i18n: {
     locales: ['en', 'id'],
     defaultLocale: 'en',

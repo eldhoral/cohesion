@@ -100,7 +100,7 @@ export const en = {
   },
   about: {
     title: 'About Us',
-    description: 'How COHESION is organised, its background, and the six divisions that deliver its work.',
+    description: 'How COHESION is organised, its background, and the people who lead and guide it.',
     subtitle: 'Our background, how COHESION is organised, and the people who lead and guide it.',
     bg: {
       eyebrow: 'Background',
@@ -109,21 +109,13 @@ export const en = {
       p2: 'COHESION brings together evidence, technical expertise, capacity strengthening, and collaboration to address development challenges and foster practical, sustainable solutions. Through partnerships and engagement across sectors, the Foundation supports stakeholders and communities in strengthening programmes, building institutional and community capacities, and advancing inclusive and sustainable development.',
     },
     tilesLabel: 'What our work touches',
-    structure: {
-      eyebrow: 'Our structure',
-      title: 'Six divisions, one per area of work',
-      text: 'Each division leads one of our areas of work.',
-    },
     team: {
       title: 'Meet the people who lead and guide COHESION',
       text: 'Trustees, advisors, management and supervisors with experience in health, food and nutrition, education and the environment.',
-      button: 'Meet our team',
     },
   },
   team: {
     title: 'Our Team',
-    description: 'The trustees, advisors, management and supervisors who lead and guide COHESION.',
-    subtitle: 'People from health, food and nutrition, education, the environment and management lead and guide COHESION.',
     viewProfile: 'View profile',
     back: 'Back to team',
     crumbAbout: 'About Us',

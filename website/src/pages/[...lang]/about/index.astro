@@ -3,9 +3,12 @@ import Base from '../../../layouts/Base.astro';
 import PageHero from '../../../components/PageHero.astro';
 import Eyebrow from '../../../components/Eyebrow.astro';
 import PhotoTile from '../../../components/PhotoTile.astro';
-import { areas } from '../../../data/areas.ts';
+import PersonCard from '../../../components/PersonCard.astro';
+import AdvisorCard from '../../../components/AdvisorCard.astro';
+import { teamGroups } from '../../../data/people.ts';
+import { advisors } from '../../../data/advisors.ts';
 import { photo } from '../../../data/images.ts';
-import { localePath, t, type Locale } from '../../../i18n/index.ts';
+import { t, type Locale } from '../../../i18n/index.ts';
 
 export function getStaticPaths() {
   return [{ params: { lang: undefined } }, { params: { lang: 'id' } }];
@@ -43,31 +46,30 @@ const tiles = ([
     </div>
   </section>
 
-  <section class="section section--mist">
+  <section class="section team-intro" id="team">
     <div class="container">
-      <Eyebrow>{a.structure.eyebrow}</Eyebrow>
-      <h2>{a.structure.title}</h2>
-      <p class="lead">{a.structure.text}</p>
-      <div class="divs">
-        {areas.map((x) => (
-          <article class="div" data-division={x.slug}>
-            <span class="div__n">{String(x.n).padStart(2, '0')}</span>
-            <h3>{x.name[lang]}</h3>
-          </article>
-        ))}
-      </div>
+      <Eyebrow>{d.team.title}</Eyebrow>
+      <h2>{a.team.title}</h2>
+      <p class="lead">{a.team.text}</p>
     </div>
   </section>
 
-  <section class="section section--navy">
-    <div class="container band">
-      <div>
-        <h2>{a.team.title}</h2>
-        <p>{a.team.text}</p>
+  {teamGroups.map((g, i) => (
+    <section class:list={['section', 'group', { 'group--alt': i % 2 === 0 }]} data-group={g.key}>
+      <div class="container">
+        <h3 class="group__title">{g.title[lang]}</h3>
+        {g.key === 'advisors' ? (
+          <div class="advisors">
+            {advisors.map((x) => <AdvisorCard advisor={x} lang={lang} />)}
+          </div>
+        ) : (
+          <div class="people">
+            {g.people?.map((p) => <PersonCard person={p} lang={lang} />)}
+          </div>
+        )}
       </div>
-      <a class="btn btn--yellow" href={localePath(lang, '/about/team/')}>{a.team.button}</a>
-    </div>
-  </section>
+    </section>
+  ))}
 </Base>
 
 <style>
@@ -80,12 +82,11 @@ const tiles = ([
   .tiles :global(.tile:nth-child(5)) { grid-column: 1; grid-row: 6 / 9; }
   .tiles :global(.tile:nth-child(6)) { grid-column: 2; grid-row: 6 / 9; }
   @media (min-width: 60rem) { .tiles { grid-auto-rows: 5rem; } }
-  .lead { color: var(--muted); max-width: 36rem; margin-bottom: 2rem; }
-  .divs { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); }
-  .div { display: flex; gap: 1rem; align-items: center; background: #fff; border-radius: var(--radius); border-left: 4px solid var(--yellow); padding: 1.25rem; box-shadow: var(--shadow); }
-  .div__n { font: 800 1.5rem var(--font-head); color: var(--teal); }
-  .div h3 { margin: 0; font-size: 1.125rem; }
-  .band { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 2rem; }
-  .band p { margin: 0; max-width: 38rem; }
+  .lead { color: var(--muted); max-width: 40rem; margin: 0; }
+  .team-intro { scroll-margin-top: 5rem; padding-bottom: 2.5rem; }
+  .group--alt { background: var(--mist); }
+  .group__title { margin: 0 0 2rem; }
+  .people { display: grid; gap: 2rem 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); }
+  .advisors { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); }
   @media (min-width: 60rem) { .bg { grid-template-columns: 1fr 1fr; } }
 </style>

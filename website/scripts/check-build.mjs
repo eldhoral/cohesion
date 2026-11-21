@@ -16,9 +16,13 @@ function walk(dir) {
 
 /** route -> html, e.g. "/id/about/" */
 const pages = {};
+/** redirect stubs (meta refresh) are not real pages: route -> html */
+const redirects = {};
 for (const f of walk(DIST).filter((f) => f.endsWith('index.html'))) {
   const route = '/' + relative(DIST, f).replace(/index\.html$/, '');
-  pages[route] = readFileSync(f, 'utf8');
+  const html = readFileSync(f, 'utf8');
+  if (/http-equiv="refresh"/.test(html)) redirects[route] = html;
+  else pages[route] = html;
 }
 const routes = Object.keys(pages).sort();
 const enRoutes = routes.filter((r) => !r.startsWith('/id/') && r !== '/id/');
@@ -81,15 +85,13 @@ const rules = {
 
   about() {
     const f = [];
-    const AREA_ORDER = ['health-nutrition', 'food-system', 'climate-environment', 'education-capacity', 'research-development', 'monitoring-evaluation-learning'];
     for (const [r, lang] of [['/about/', 'en'], ['/id/about/', 'id']]) {
       const h = pages[r];
       if (!h) { f.push(`${r}: page missing`); continue; }
       if (count(h, /<h1[\s>]/g) !== 1) f.push(`${r}: expected exactly one <h1>`);
-      const team = lang === 'en' ? 'href="/about/team/"' : 'href="/id/about/team/"';
-      if (!h.includes(team)) f.push(`${r}: no link to the team page`);
-      const divs = [...h.matchAll(/data-division="([a-z-]+)"/g)].map((m) => m[1]);
-      if (divs.join() !== AREA_ORDER.join()) f.push(`${r}: divisions wrong or out of order: ${divs.join(',')}`);
+      if (h.includes(lang === 'en' ? 'href="/about/team/"' : 'href="/id/about/team/"')) f.push(`${r}: the team lives on this page now, do not link to /about/team/`);
+      if (!/id="team"/.test(h)) f.push(`${r}: the team section (id="team") is missing`);
+      if (/data-division=/.test(h) || /Our structure|Struktur Kami/i.test(text(h))) f.push(`${r}: the "Our structure" section was removed at the client's request`);
       const t = text(h);
       for (const bad of ['Head:', '[TBC]', 'Lanny', 'Tohom', 'Verdi']) if (t.includes(bad)) f.push(`${r}: must not contain "${bad}"`);
       for (const bad of ['Notarial Deed', 'Akta Notaris', 'Nurlela', 'Nurtela']) if (t.includes(bad)) f.push(`${r}: the notarial deed card was removed at the client's request; found "${bad}"`);
@@ -108,7 +110,7 @@ const rules = {
 
   team() {
     const f = [];
-    for (const [r, lang] of [['/about/team/', 'en'], ['/id/about/team/', 'id']]) {
+    for (const [r, lang] of [['/about/', 'en'], ['/id/about/', 'id']]) {
       const h = pages[r];
       if (!h) { f.push(`${r}: page missing`); continue; }
       const t0 = text(h);
@@ -128,6 +130,12 @@ const rules = {
       if (adv.length !== 8) f.push(`${r}: expected 8 advisor cards, found ${adv.length}`);
       if (adv.some((a) => /<a[\s>]/.test(a))) f.push(`${r}: advisor cards must not be links`);
     }
+    for (const [r, to] of [['/about/team/', '/about/'], ['/id/about/team/', '/id/about/']]) {
+      const h = redirects[r];
+      if (!h) f.push(`${r}: old team URL must redirect to ${to}, not 404`);
+      else if (!h.includes(`url=${to}`)) f.push(`${r}: must redirect to ${to}`);
+      if (pages[r]) f.push(`${r}: the standalone team page must be gone`);
+    }
     for (const p of people) {
       for (const lang of ['en', 'id']) {
         const r = (lang === 'en' ? '' : '/id') + `/about/team/${p.slug}/`;
@@ -137,7 +145,7 @@ const rules = {
         if (!new RegExp(`<h1[^>]*>\\s*${p.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*</h1>`).test(h)) f.push(`${r}: h1 must be the person's name`);
         if (!t.includes(p.role[lang])) f.push(`${r}: role missing`);
         if (!/<img[^>]*alt="[^"]+"/.test(h.replace(/<header[\s\S]*?<\/header>/, ''))) f.push(`${r}: portrait needs alt text`);
-        if (!h.includes(`href="${lang === 'en' ? '' : '/id'}/about/team/"`)) f.push(`${r}: no back link`);
+        if (!h.includes(`href="${lang === 'en' ? '' : '/id'}/about/#team"`)) f.push(`${r}: no back link to the team section`);
         const bio0 = p.bio[lang][0].slice(0, 60);
         if (!t.includes(bio0)) f.push(`${r}: bio not in ${lang}`);
         if (lang === 'en' && /\bBeliau\b/.test(t)) f.push(`${r}: Indonesian text on English page`);
