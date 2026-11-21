@@ -109,7 +109,6 @@ export const en = {
       p2: 'COHESION brings together evidence, technical expertise, capacity strengthening, and collaboration to address development challenges and foster practical, sustainable solutions. Through partnerships and engagement across sectors, the Foundation supports stakeholders and communities in strengthening programmes, building institutional and community capacities, and advancing inclusive and sustainable development.',
     },
     tilesLabel: 'What our work touches',
-    tiles: { wheat: 'Wheat', rice: 'Rice', salt: 'Salt', leaf: 'Environment', plate: 'Healthy plate', school: 'School bench' },
     structure: {
       eyebrow: 'Our structure',
       title: 'Six divisions, one per area of work',

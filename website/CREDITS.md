@@ -2,9 +2,9 @@
 
 All stock photos are from [Unsplash](https://unsplash.com) under the Unsplash licence. People photos in `src/assets/people/` are supplied by Yayasan COHESION.
 
-- `hero1.jpg`: Husniati Salma, https://unsplash.com/photos/qZXTELI3oYo
-- `hero2.jpg`: Deny Napitupulu, https://unsplash.com/photos/Wft59e9QNhc
-- `hero3.jpg`: Reynardo Etenia Wongso, https://unsplash.com/photos/EHmoH8aCQqU
+- `hero1.jpg`: Geio Tischler, https://unsplash.com/photos/UtilSW8zuZk
+- `hero2.jpg`: Antonio Araujo, https://unsplash.com/photos/Hj_h_LvGTss
+- `hero3.jpg`: Jun Ren, https://unsplash.com/photos/RTFX0TQHXko
 - `about-hero.jpg`: Dino Januarsa, https://unsplash.com/photos/JzGl5_0fC2I
 - `work-hero.jpg`: Polina Kuzovkova, https://unsplash.com/photos/6ySPcMiS_rg
 - `contact-hero.jpg`: Maximus Beaumont, https://unsplash.com/photos/4eOOGZVS-zw
@@ -23,3 +23,5 @@ All stock photos are from [Unsplash](https://unsplash.com) under the Unsplash li
 - `tile-leaf.jpg`: Rémi Walle, https://unsplash.com/photos/Ui3bOgnjtl0
 - `tile-plate.jpg`: Anna Pelzer, https://unsplash.com/photos/IGfIGP5ONV0
 - `tile-school.jpg`: 2y.kang, https://unsplash.com/photos/dFohf_GUZJ0
+- `work-rnd.jpg`: Yassine Khalfalli, https://unsplash.com/photos/_c70Nhh6p44
+- `work-mel.jpg`: Carlos Muza, https://unsplash.com/photos/hpjSkU2UYSU

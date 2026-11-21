@@ -4,9 +4,9 @@ export type Photo = { file: string; alt: L; credit: { author: string; url: strin
 
 /** Stock photos (Unsplash licence). File names live in src/assets/photos/. Swap a file and its entry when the foundation has its own photos. */
 export const photos = {
-  hero1: { file: "hero1.jpg", alt: { en: "A young girl looking into the camera", id: "Seorang anak perempuan menatap kamera" }, credit: { author: "Husniati Salma", url: "https://unsplash.com/photos/qZXTELI3oYo" } },
-  hero2: { file: "hero2.jpg", alt: { en: "A woman working in a rice field", id: "Seorang perempuan bekerja di sawah" }, credit: { author: "Deny Napitupulu", url: "https://unsplash.com/photos/Wft59e9QNhc" } },
-  hero3: { file: "hero3.jpg", alt: { en: "A smiling child", id: "Seorang anak tersenyum" }, credit: { author: "Reynardo Etenia Wongso", url: "https://unsplash.com/photos/EHmoH8aCQqU" } },
+  hero1: { file: "hero1.jpg", alt: { en: "Aerial view of lush tropical forest in Bali", id: "Pemandangan udara hutan tropis yang rimbun di Bali" }, credit: { author: "Geio Tischler", url: "https://unsplash.com/photos/UtilSW8zuZk" } },
+  hero2: { file: "hero2.jpg", alt: { en: "Aerial view of rice fields in Ubud", id: "Pemandangan udara sawah di Ubud" }, credit: { author: "Antonio Araujo", url: "https://unsplash.com/photos/Hj_h_LvGTss" } },
+  hero3: { file: "hero3.jpg", alt: { en: "Sunlight streaming into an empty classroom", id: "Cahaya matahari masuk ke ruang kelas kosong" }, credit: { author: "Jun Ren", url: "https://unsplash.com/photos/RTFX0TQHXko" } },
   aboutHero: { file: "about-hero.jpg", alt: { en: "Smiling boys from Papua", id: "Anak-anak laki-laki tersenyum dari Papua" }, credit: { author: "Dino Januarsa", url: "https://unsplash.com/photos/JzGl5_0fC2I" } },
   workHero: { file: "work-hero.jpg", alt: { en: "An elderly farmer in a straw hat", id: "Seorang petani lanjut usia bertopi jerami" }, credit: { author: "Polina Kuzovkova", url: "https://unsplash.com/photos/6ySPcMiS_rg" } },
   contactHero: { file: "contact-hero.jpg", alt: { en: "Two girls in traditional Sasak dress", id: "Dua anak perempuan berpakaian adat Sasak" }, credit: { author: "Maximus Beaumont", url: "https://unsplash.com/photos/4eOOGZVS-zw" } },
@@ -25,6 +25,8 @@ export const photos = {
   tileLeaf: { file: "tile-leaf.jpg", alt: { en: "Green leaves", id: "Daun hijau" }, credit: { author: "Rémi Walle", url: "https://unsplash.com/photos/Ui3bOgnjtl0" } },
   tilePlate: { file: "tile-plate.jpg", alt: { en: "A bowl of fresh vegetables", id: "Semangkuk sayuran segar" }, credit: { author: "Anna Pelzer", url: "https://unsplash.com/photos/IGfIGP5ONV0" } },
   tileSchool: { file: "tile-school.jpg", alt: { en: "An empty classroom with wooden desks", id: "Ruang kelas kosong dengan bangku kayu" }, credit: { author: "2y.kang", url: "https://unsplash.com/photos/dFohf_GUZJ0" } },
+  workRnd: { file: "work-rnd.jpg", alt: { en: "A black microscope", id: "Mikroskop hitam" }, credit: { author: "Yassine Khalfalli", url: "https://unsplash.com/photos/_c70Nhh6p44" } },
+  workMel: { file: "work-mel.jpg", alt: { en: "Statistics on a laptop screen", id: "Statistik di layar laptop" }, credit: { author: "Carlos Muza", url: "https://unsplash.com/photos/hpjSkU2UYSU" } },
 } satisfies Record<string, Photo>;
 
 export type PhotoKey = keyof typeof photos;

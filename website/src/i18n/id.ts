@@ -111,7 +111,6 @@ export const id: typeof en = {
       p2: 'COHESION menyatukan bukti, keahlian teknis, penguatan kapasitas, dan kolaborasi untuk menjawab tantangan pembangunan dan mendorong solusi yang praktis dan berkelanjutan. Melalui kemitraan dan keterlibatan lintas sektor, yayasan mendukung para pemangku kepentingan dan komunitas dalam memperkuat program, membangun kapasitas kelembagaan dan komunitas, serta memajukan pembangunan yang inklusif dan berkelanjutan.',
     },
     tilesLabel: 'Hal-hal yang kami sentuh',
-    tiles: { wheat: 'Gandum', rice: 'Beras', salt: 'Garam', leaf: 'Lingkungan', plate: 'Piring makan sehat', school: 'Bangku sekolah' },
     structure: {
       eyebrow: 'Struktur kami',
       title: 'Enam bidang, masing-masing untuk satu area kerja',

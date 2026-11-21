@@ -97,9 +97,10 @@ const rules = {
       if (h.includes('timeline')) f.push(`${r}: the old timeline structure must be gone`);
       const tiles = [...h.matchAll(/data-tile="([a-z]+)"/g)].map((m) => m[1]);
       if (tiles.join() !== 'wheat,rice,salt,leaf,plate,school') f.push(`${r}: illustration tiles wrong: ${tiles.join(',')}`);
-      if (count(h, /class="tile__label/g) !== 6) f.push(`${r}: every tile needs a visible label`);
+      if (/class="tile__label/.test(h)) f.push(`${r}: tile photos must not carry text`);
       const tileHtml = [...h.matchAll(/<li class="tile[^>]*data-tile="[a-z]+"[^>]*>([\s\S]*?)<\/li>/g)].map((m) => m[1]);
-      if (tileHtml.length !== 6 || tileHtml.some((x) => !/<img /.test(x))) f.push(`${r}: every tile must show a photo, not an icon`);
+      if (tileHtml.length !== 6 || tileHtml.some((x) => !/<img [^>]*alt="[^"]+"/.test(x))) f.push(`${r}: every tile must show a photo with alt text`);
+      if (tileHtml.some((x) => x.replace(/<img [^>]*>/g, '').replace(/<[^>]+>/g, '').trim())) f.push(`${r}: tiles must show no text over or beside the photos`);
       if (tileHtml.some((x) => /<svg/.test(x))) f.push(`${r}: tiles must not use svg icons`);
     }
     return f;
@@ -150,7 +151,9 @@ const rules = {
       if (count(h, /<h1[\s>]/g) !== 1) f.push(`${r}: expected exactly one <h1>`);
       const order = [...h.matchAll(/data-focus="([a-z-]+)"/g)].map((m) => m[1]);
       if (order.join() !== AREA_ORDER.join()) f.push(`${r}: focus cards wrong: ${order.join(',')}`);
-      if (count(h, /data-solid/g) !== 2) f.push(`${r}: R&D and MEL are the two solid cards`);
+      if (count(h, /data-solid/g) !== 0) f.push(`${r}: every focus card needs a photo (R&D and MEL were solid until the client asked for photos)`);
+      const cards = h.match(/<article class="focus[\s\S]*?<\/article>/g) || [];
+      if (cards.length !== 6 || cards.some((c) => !/<img /.test(c))) f.push(`${r}: all six focus cards must show a photo`);
       const ap = [...h.matchAll(/data-approach="([a-z]+)"/g)].map((m) => m[1]);
       if (ap.join() !== 'evidence,technical,partnerships') f.push(`${r}: approach cards wrong: ${ap.join(',')}`);
       const ups = h.match(/<article class="update[\s\S]*?<\/article>/g) || [];

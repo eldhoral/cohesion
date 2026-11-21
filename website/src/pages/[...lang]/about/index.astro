@@ -22,7 +22,7 @@ const tiles = ([
   ['leaf', 'tileLeaf'],
   ['plate', 'tilePlate'],
   ['school', 'tileSchool'],
-] as const).map(([tile, key]) => ({ tile, image: photo(key).src, label: a.tiles[tile] }));
+] as const).map(([tile, key]) => ({ tile, image: photo(key).src, alt: photo(key).alt[lang] }));
 ---
 <Base title={a.title} description={a.description}>
   <PageHero lang={lang} title={a.title} subtitle={a.subtitle} image={hero.src} />
@@ -37,7 +37,7 @@ const tiles = ([
       </div>
       <div>
         <ul class="tiles" aria-label={a.tilesLabel}>
-          {tiles.map((x) => <PhotoTile tile={x.tile} image={x.image} label={x.label} />)}
+          {tiles.map((x) => <PhotoTile tile={x.tile} image={x.image} alt={x.alt} />)}
         </ul>
       </div>
     </div>
