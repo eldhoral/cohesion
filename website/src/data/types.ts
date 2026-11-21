@@ -13,7 +13,7 @@ export type Person = {
 
 export type Advisor = { name: string; roles: L<string[]> };
 
-export type Area = { n: 1 | 2 | 3 | 4 | 5 | 6; slug: string; name: L; blurb: L };
+export type Area = { n: 1 | 2 | 3 | 4 | 5 | 6; slug: string; name: L; blurb: L; /** key of src/data/photos.ts */ photo: string };
 
 export type Update = { slug: string; title: L; summary: L; tag: L; /** key of src/data/photos.ts */ photo: string };
 

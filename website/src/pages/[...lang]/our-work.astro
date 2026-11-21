@@ -17,14 +17,6 @@ export function getStaticPaths() {
 const lang: Locale = Astro.params.lang === 'id' ? 'id' : 'en';
 const w = t(lang).work;
 const hero = photo('workHero');
-const areaPhoto: Record<string, PhotoKey> = {
-  'health-nutrition': 'health',
-  'food-system': 'food',
-  'climate-environment': 'climate',
-  'education-capacity': 'education',
-  'research-development': 'workRnd',
-  'monitoring-evaluation-learning': 'workMel',
-};
 const tones = ['navy', 'teal', 'green'] as const;
 const keys = ['evidence', 'technical', 'partnerships'] as const;
 ---
@@ -49,8 +41,7 @@ const keys = ['evidence', 'technical', 'partnerships'] as const;
       </div>
       <div class="grid3">
         {areas.map((a) => {
-          const key = areaPhoto[a.slug];
-          return <FocusCard area={a} lang={lang} image={key ? photo(key).src : undefined} tone={a.slug === 'monitoring-evaluation-learning' ? 'teal' : 'navy'} />;
+          return <FocusCard area={a} lang={lang} image={photo(a.photo as PhotoKey).src} />;
         })}
       </div>
     </div>

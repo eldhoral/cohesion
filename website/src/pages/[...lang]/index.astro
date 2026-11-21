@@ -3,7 +3,8 @@ import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import Eyebrow from '../../components/Eyebrow.astro';
 import HeroSlider from '../../components/HeroSlider.astro';
-import AreaCard from '../../components/AreaCard.astro';
+import FocusCard from '../../components/FocusCard.astro';
+import type { PhotoKey } from '../../data/photos.ts';
 import UpdateCard from '../../components/UpdateCard.astro';
 import { areas } from '../../data/areas.ts';
 import { updates } from '../../data/updates.ts';
@@ -79,7 +80,7 @@ const cta = photo('ctaBand');
         <h2>{h.areas.title}</h2>
       </div>
       <div class="grid3">
-        {areas.map((a) => <AreaCard area={a} lang={lang} />)}
+        {areas.map((a) => <FocusCard area={a} lang={lang} image={photo(a.photo as PhotoKey).src} />)}
       </div>
     </div>
   </section>

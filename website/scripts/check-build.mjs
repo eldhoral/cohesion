@@ -59,8 +59,10 @@ const rules = {
       const slides = h.match(/<div class="slide[^"]*"[^>]*data-slide[^>]*>/g) || [];
       if (slides.length !== 3) f.push(`${r}: expected 3 slides, found ${slides.length}`);
       else if (/aria-hidden/.test(slides[0]) || !slides.slice(1).every((s) => /aria-hidden="true"/.test(s))) f.push(`${r}: only the first slide may be visible without JavaScript`);
-      const order = [...h.matchAll(/data-area="([a-z-]+)"/g)].map((m) => m[1]);
+      const order = [...h.matchAll(/data-focus="([a-z-]+)"/g)].map((m) => m[1]);
       if (order.join() !== AREA_ORDER.join()) f.push(`${r}: area cards out of order: ${order.join(',')}`);
+      const areaCards = h.match(/<article class="focus[\s\S]*?<\/article>/g) || [];
+      if (areaCards.length !== 6 || areaCards.some((c) => !/<img /.test(c))) f.push(`${r}: the six areas of work must be photo cards, like Our Work`);
       if (count(h, /class="statement[ "]/g) !== 2) f.push(`${r}: vision and mission must share the "statement" class`);
       if (/Since 2026/i.test(h)) f.push(`${r}: "Since 2026" badge must be removed`);
       if (h.includes('hero-tiles')) f.push(`${r}: image tiles under the hero must be removed`);

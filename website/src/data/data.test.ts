@@ -49,6 +49,10 @@ test('people who are not on the website are absent from all data', () => {
   for (const n of ['Lanny', 'Tohom', 'Verdi']) assert.ok(!all.includes(n), n);
 });
 
+test('every area of work points at a real photo', () => {
+  for (const a of areas) assert.ok(a.photo in photos, `${a.slug} photo ${a.photo}`);
+});
+
 test('areas of work are in the order the client asked for', () => {
   assert.deepEqual(
     areas.map((a) => a.slug),
