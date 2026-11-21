@@ -1,0 +1,33 @@
+---
+import { pathLocale, localePath, stripLocale, t } from '../i18n/index.ts';
+const { pathname } = Astro.props as { pathname: string };
+const lang = pathLocale(pathname);
+const here = stripLocale(pathname);
+const items = [
+  { code: 'id', label: 'ID', href: localePath('id', here) },
+  { code: 'en', label: 'EN', href: localePath('en', here) },
+] as const;
+---
+<div class="lang" role="group" aria-label={t(lang).nav.language}>
+  {items.map((i) => (
+    <a
+      href={i.href}
+      hreflang={i.code}
+      lang={i.code}
+      aria-current={i.code === lang ? 'true' : undefined}
+      class:list={['lang__item', { 'is-current': i.code === lang }]}>{i.label}</a>
+  ))}
+</div>
+<style>
+  .lang { display: inline-flex; align-items: center; gap: 0.25rem; }
+  .lang__item {
+    min-width: 2.75rem; min-height: 2.75rem;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 0.5rem;
+    font: 700 0.9375rem var(--font-head);
+    color: var(--navy-deep);
+    text-decoration: none;
+  }
+  .lang__item:hover { background: var(--mist); }
+  .lang__item.is-current { background: var(--navy-deep); color: #fff; }
+</style>

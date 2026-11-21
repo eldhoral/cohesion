@@ -1,0 +1,28 @@
+{
+  "name": "website",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "npm test && astro check && astro build",
+    "preview": "astro preview",
+    "test": "node --test \"src/**/*.test.ts\"",
+    "check": "node scripts/check-build.mjs",
+    "layout": "node scripts/layout-check.mjs",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.6",
+    "@fontsource/montserrat": "^5.3.0",
+    "@fontsource/nunito-sans": "^5.3.0",
+    "astro": "^7.4.13"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "puppeteer-core": "^25.18.1",
+    "typescript": "^6.0.3"
+  }
+}

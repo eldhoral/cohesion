@@ -1,0 +1,101 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import { photo } from '../../data/images.ts';
+import { config } from '../../config.ts';
+import { localePath, t, type Locale } from '../../i18n/index.ts';
+
+export function getStaticPaths() {
+  return [{ params: { lang: undefined } }, { params: { lang: 'id' } }];
+}
+
+const lang: Locale = Astro.params.lang === 'id' ? 'id' : 'en';
+const d = t(lang);
+const c = d.contact;
+const hero = photo('contactHero');
+const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(config.address)}&output=embed`;
+// Order asked by the client: Office, Email, (WhatsApp added), LinkedIn
+const cards = [
+  { key: 'office', title: c.office, text: config.address, href: undefined as string | undefined },
+  { key: 'email', title: c.email, text: config.email, href: `mailto:${config.email}` },
+  { key: 'whatsapp', title: c.whatsapp, text: config.phone, href: config.whatsapp(lang) },
+  ...(config.linkedin ? [{ key: 'linkedin', title: c.linkedin, text: c.linkedinText, href: config.linkedin }] : []),
+];
+---
+<Base title={c.title} description={c.description}>
+  <section class="hero" data-contact-hero>
+    <Image class="hero__img photo-bw" src={hero.src} alt="" widths={[800, 1400, 2200]} sizes="100vw" loading="eager" />
+    <div class="hero__shade"></div>
+    <div class="container hero__grid">
+      <div>
+        <nav class="crumbs" aria-label={d.common.breadcrumb}>
+          <a href={localePath(lang, '/')}>{d.common.home}</a> <span aria-hidden="true">/</span> <span>{c.title}</span>
+        </nav>
+        <span class="badge">{c.badge}</span>
+        <h1>{c.heading}</h1>
+        <p class="hero__text">{c.text}</p>
+        <div class="actions">
+          <a class="btn btn--yellow" href={config.whatsapp(lang)} target="_blank" rel="noopener">{d.common.whatsapp}</a>
+          <a class="btn btn--ghost" href={config.profilePdf} download>{d.common.downloadProfile}</a>
+        </div>
+      </div>
+      <aside class="chat" data-wa-card aria-label={c.whatsapp}>
+        <div class="chat__head">
+          <strong>COHESION</strong>
+          <span>{config.phone}</span>
+        </div>
+        <p class="chat__bubble">{config.whatsappMessage[lang]}</p>
+        <span class="chat__label">{c.template}</span>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container info">
+      <ul class="cards">
+        {cards.map((x) => (
+          <li class="card" data-contact={x.key}>
+            <h2>{x.title}</h2>
+            {x.key === 'office' ? <address>{x.text}</address> : <a href={x.href} target={x.key === 'office' ? undefined : x.key === 'email' ? undefined : '_blank'} rel={x.key === 'email' ? undefined : 'noopener'}>{x.text}</a>}
+          </li>
+        ))}
+      </ul>
+      <div class="map">
+        <iframe src={mapSrc} title={c.mapTitle} loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { position: relative; isolation: isolate; overflow: hidden; background: var(--navy-deep); color: #fff; padding-block: clamp(3rem, 8vw, 5.5rem); }
+  .hero__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; opacity: 0.5; }
+  .hero__shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgb(18 48 79 / 0.93), rgb(18 48 79 / 0.55)); }
+  .hero__grid { display: grid; gap: 2rem; align-items: center; }
+  .crumbs { font-size: var(--step-small); margin-bottom: 1rem; display: flex; gap: 0.4rem; }
+  .crumbs a { color: var(--yellow); }
+  .badge { display: inline-block; background: var(--yellow); color: var(--navy-deep); font: 700 var(--step-eyebrow) var(--font-head); padding: 0.4rem 0.9rem; border-radius: 99px; margin-bottom: 1rem; }
+  h1 { color: #fff; margin-bottom: 0.4em; }
+  .hero__text { max-width: 30rem; font-size: 1.1875rem; margin-bottom: 1.5rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .chat { background: #fff; color: var(--ink); border-top: 4px solid var(--yellow); border-radius: var(--radius); padding: 1.25rem; box-shadow: var(--shadow); max-width: 24rem; }
+  .chat__head { display: grid; margin-bottom: 0.75rem; }
+  .chat__head span { color: var(--muted); font-size: var(--step-small); }
+  .chat__bubble { background: #dff0e6; border-radius: 0.75rem; padding: 0.9rem 1rem; margin: 0 0 0.5rem 1.5rem; font-size: var(--step-small); }
+  .chat__label { display: block; text-align: right; color: var(--muted); font-size: var(--step-eyebrow); }
+
+  .info { display: grid; gap: 1.5rem; }
+  .cards { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; align-content: start; }
+  .card { background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--teal); border-radius: var(--radius); padding: 1.1rem 1.25rem; }
+  .card h2 { font-size: 1.125rem; margin-bottom: 0.25rem; }
+  .card address { font-style: normal; color: var(--muted); }
+  .card a { color: var(--teal); overflow-wrap: anywhere; }
+  .map { min-height: 22rem; border-radius: var(--radius); overflow: hidden; background: var(--mist); }
+  .map iframe { width: 100%; height: 100%; min-height: 22rem; border: 0; }
+
+  @media (min-width: 60rem) {
+    .hero__grid { grid-template-columns: 1.2fr 1fr; }
+    .chat { justify-self: end; }
+    .info { grid-template-columns: 1fr 1fr; }
+  }
+</style>

@@ -1,0 +1,46 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../../../layouts/Base.astro';
+import { people } from '../../../../data/people.ts';
+import { personImage } from '../../../../data/images.ts';
+import { localePath, t, type Locale } from '../../../../i18n/index.ts';
+
+export function getStaticPaths() {
+  return [undefined, 'id'].flatMap((lang) => people.map((p) => ({ params: { lang, slug: p.slug }, props: { person: p } })));
+}
+
+const lang: Locale = Astro.params.lang === 'id' ? 'id' : 'en';
+const d = t(lang);
+const { person } = Astro.props;
+---
+<Base title={person.name} description={person.bio[lang][0].slice(0, 155).replace(/\s+\S*$/, '') + '…'}>
+  <section class="section">
+    <div class="container profile">
+      <nav class="crumbs" aria-label={d.common.breadcrumb}>
+        <a href={localePath(lang, '/')}>{d.common.home}</a> <span aria-hidden="true">/</span>
+        <a href={localePath(lang, '/about/')}>{d.team.crumbAbout}</a> <span aria-hidden="true">/</span>
+        <a href={localePath(lang, '/about/team/')}>{d.team.title}</a>
+      </nav>
+      <div class="profile__grid">
+        <Image class="profile__img" src={personImage(person.photo)} alt={person.name} widths={[400, 720]} sizes="(min-width: 50rem) 22rem, 80vw" loading="eager" />
+        <div>
+          <h1>{person.name}</h1>
+          <p class="profile__role">{person.role[lang]}</p>
+          {person.bio[lang].map((para) => <p>{para}</p>)}
+          <a class="btn btn--outline" href={localePath(lang, '/about/team/')}>← {d.team.back}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .crumbs { display: flex; flex-wrap: wrap; gap: 0.4rem; font-size: var(--step-small); margin-bottom: 2rem; }
+  .profile__grid { display: grid; gap: 2rem; align-items: start; }
+  .profile__img { width: min(100%, 22rem); height: auto; aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 20%; border-radius: var(--radius); box-shadow: var(--shadow); }
+  h1 { font-size: clamp(2rem, 1.4rem + 2.5vw, 3rem); margin-bottom: 0.25rem; }
+  .profile__role { display: inline-block; font: 700 var(--step-eyebrow) var(--font-head); letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 1.5rem; }
+  .profile__grid p { max-width: 44rem; }
+  .btn { margin-top: 1rem; }
+  @media (min-width: 50rem) { .profile__grid { grid-template-columns: 22rem 1fr; gap: 3rem; } }
+</style>
