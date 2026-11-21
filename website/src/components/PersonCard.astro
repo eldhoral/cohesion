@@ -1,0 +1,23 @@
+---
+import { Image } from 'astro:assets';
+import type { Person } from '../data/types.ts';
+import { personImage } from '../data/images.ts';
+import { localePath, t, type Locale } from '../i18n/index.ts';
+
+const { person, lang } = Astro.props as { person: Person; lang: Locale };
+const href = localePath(lang, `/about/team/${person.slug}/`);
+---
+<a class="card" href={href} data-person={person.slug}>
+  <Image class="card__img" src={personImage(person.photo)} alt={person.name} widths={[320, 560]} sizes="(min-width: 60rem) 22vw, (min-width: 40rem) 30vw, 70vw" loading="lazy" />
+  <span class="card__name">{person.name}</span>
+  <span class="card__role">{person.role[lang]}</span>
+  <span class="visually-hidden">{t(lang).team.viewProfile}</span>
+</a>
+<style>
+  .card { display: flex; flex-direction: column; gap: 0.25rem; text-decoration: none; color: var(--ink); }
+  .card__img { width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 20%; border-radius: var(--radius); background: var(--mist); margin-bottom: 0.75rem; transition: transform 0.35s var(--ease), box-shadow 0.35s; }
+  .card:hover .card__img { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .card__name { font: 700 1.125rem / 1.25 var(--font-head); color: var(--navy-deep); }
+  .card:hover .card__name { color: var(--teal); text-decoration: underline; text-decoration-color: var(--yellow); text-decoration-thickness: 3px; text-underline-offset: 4px; }
+  .card__role { color: var(--muted); font-size: var(--step-small); }
+</style>

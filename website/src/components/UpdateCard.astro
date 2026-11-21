@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+import type { Update } from '../data/types.ts';
+import type { PhotoKey } from '../data/photos.ts';
+import { photo } from '../data/images.ts';
+import type { Locale } from '../i18n/index.ts';
+
+const { update, lang } = Astro.props as { update: Update; lang: Locale };
+const p = photo(update.photo as PhotoKey);
+---
+<article class="update">
+  <div class="update__media">
+    <Image class="photo-bw" src={p.src} alt={p.alt[lang]} widths={[480, 800]} sizes="(min-width: 60rem) 30vw, 90vw" loading="lazy" />
+  </div>
+  <div class="update__body">
+    <p class="update__tag">{update.tag[lang]}</p>
+    <h3>{update.title[lang]}</h3>
+    <p>{update.summary[lang]}</p>
+  </div>
+</article>
+<style>
+  .update { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; height: 100%; transition: transform 0.25s var(--ease), box-shadow 0.25s; }
+  .update:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .update__media { aspect-ratio: 16 / 10; overflow: hidden; }
+  .update__media :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
+  .update:hover .update__media :global(img) { transform: scale(1.04); }
+  .update__body { padding: 1.25rem 1.5rem 1.5rem; }
+  .update__tag { font: 700 var(--step-eyebrow) var(--font-head); letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.5rem; }
+  .update h3 { margin-bottom: 0.4rem; }
+  .update__body p:last-child { margin: 0; color: var(--muted); font-size: var(--step-small); }
+</style>

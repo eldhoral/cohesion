@@ -1,0 +1,165 @@
+:root {
+  --navy-deep: #12304f;
+  --navy: #1d4978;
+  --teal: #1a6a6d;
+  --green: #246948;
+  --yellow: #f9b617;
+  --ink: #14263d;
+  --muted: #4a5b6e;
+  --paper: #ffffff;
+  --mist: #eef3f4;
+  --line: #d9e2e6;
+
+  --font-head: 'Montserrat', system-ui, sans-serif;
+  --font-body: 'Nunito Sans', system-ui, sans-serif;
+
+  --step-body: 1.0625rem; /* 17px */
+  --step-small: 0.9375rem; /* 15px */
+  --step-eyebrow: 0.875rem; /* 14px */
+  --step-h3: 1.25rem;
+  --step-h2: clamp(1.75rem, 1.3rem + 2vw, 2.5rem);
+  --step-h1: clamp(2.25rem, 1.5rem + 3.5vw, 3.75rem);
+
+  --gutter: clamp(1rem, 4vw, 2rem);
+  --max: 72rem;
+  --radius: 0.75rem;
+  --shadow: 0 10px 30px -12px rgb(18 48 79 / 0.35);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 var(--step-body) / 1.6 var(--font-body);
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-head);
+  color: var(--navy-deep);
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+  text-wrap: balance;
+}
+h1 { font-size: var(--step-h1); font-weight: 800; }
+h2 { font-size: var(--step-h2); font-weight: 800; }
+h3 { font-size: var(--step-h3); font-weight: 700; }
+p { margin: 0 0 1em; text-wrap: pretty; }
+
+a { color: var(--teal); }
+a:hover { color: var(--navy); }
+
+:focus-visible {
+  /* two-tone ring: navy on light backgrounds, the white halo on dark ones; both clear 3:1 */
+  outline: 3px solid var(--navy-deep);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px #fff;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  background: var(--yellow);
+  color: var(--navy-deep);
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  text-decoration: none;
+}
+.skip-link:focus { top: 1rem; }
+
+.container {
+  width: min(100% - 2 * var(--gutter), var(--max));
+  margin-inline: auto;
+}
+
+.section { padding-block: clamp(3rem, 8vw, 6rem); }
+.section--mist { background: var(--mist); }
+.section--navy { background: var(--navy-deep); color: #fff; }
+.section--navy h2, .section--navy h3 { color: #fff; }
+.section--teal { background: var(--teal); color: #fff; }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1rem;
+  font: 700 var(--step-eyebrow) / 1 var(--font-head);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+.eyebrow::before {
+  content: '';
+  width: 1.5rem;
+  height: 3px;
+  background: var(--yellow);
+}
+.section--navy .eyebrow, .hero .eyebrow, .section--teal .eyebrow { color: var(--yellow); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.7rem 1.25rem;
+  border: 2px solid transparent;
+  border-radius: 0.5rem;
+  font: 700 1rem / 1.2 var(--font-head);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s var(--ease), background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn--yellow { background: var(--yellow); color: var(--navy-deep); }
+.btn--yellow:hover { background: #ffc73d; color: var(--navy-deep); }
+.btn--teal { background: var(--teal); color: #fff; }
+.btn--teal:hover { background: var(--navy); color: #fff; }
+.btn--ghost { border-color: #fff; color: #fff; }
+.btn--ghost:hover { background: #fff; color: var(--navy-deep); }
+.btn--outline { border-color: var(--navy-deep); color: var(--navy-deep); }
+.btn--outline:hover { background: var(--navy-deep); color: #fff; }
+
+.photo-bw { filter: grayscale(1) contrast(1.05); }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    transition-property: opacity !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  .btn:hover { transform: none; }
+}

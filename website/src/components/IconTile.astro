@@ -1,0 +1,21 @@
+---
+export type TileIcon = 'wheat' | 'rice' | 'salt' | 'leaf' | 'plate' | 'school';
+export interface Props { icon: TileIcon; label: string }
+const { icon, label } = Astro.props as Props;
+---
+<li class="tile" data-tile={icon}>
+  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    {icon === 'wheat' && (<><path d="M12 22V9" /><path d="M12 9c-2-1-3-3-3-6 2 0 3 2 3 6Zm0 0c2-1 3-3 3-6-2 0-3 2-3 6Z" /><path d="M12 15c-2-1-4-3-4-6 2 0 4 2 4 6Zm0 0c2-1 4-3 4-6-2 0-4 2-4 6Z" /></>)}
+    {icon === 'rice' && (<><path d="M12 22v-9" /><path d="M12 13C12 9 9 6 5 6c0 4 3 7 7 7Z" /><path d="M12 13c0-4 3-7 7-7 0 4-3 7-7 7Z" /></>)}
+    {icon === 'salt' && (<><path d="M8 9h8l1 11a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1L8 9Z" /><path d="M8 9V7a4 4 0 0 1 8 0v2" /><path d="M10 5.5h.01M12 4.5h.01M14 5.5h.01" /></>)}
+    {icon === 'leaf' && (<><path d="M5 19C5 10 10 5 20 5c0 10-5 15-13 15" /><path d="M5 19c4-4 7-6 11-8" /></>)}
+    {icon === 'plate' && (<><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="5" /></>)}
+    {icon === 'school' && (<><path d="M3 11h18" /><path d="M5 11v8M19 11v8" /><path d="M8 15h8" /><path d="M7 7h10v4H7z" /></>)}
+  </svg>
+  <span class="tile__label">{label}</span>
+</li>
+<style>
+  .tile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; padding: 1.25rem 0.75rem; border-radius: var(--radius); background: #fff; color: var(--teal); text-align: center; box-shadow: var(--shadow); transition: transform 0.25s var(--ease); }
+  .tile:hover { transform: translateY(-3px); }
+  .tile__label { font: 700 var(--step-small) var(--font-head); color: var(--navy-deep); }
+</style>

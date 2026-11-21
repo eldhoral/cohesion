@@ -1,0 +1,173 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Eyebrow from '../../components/Eyebrow.astro';
+import HeroSlider from '../../components/HeroSlider.astro';
+import AreaCard from '../../components/AreaCard.astro';
+import UpdateCard from '../../components/UpdateCard.astro';
+import { areas } from '../../data/areas.ts';
+import { updates } from '../../data/updates.ts';
+import { people } from '../../data/people.ts';
+import { photo, personImage } from '../../data/images.ts';
+import { config } from '../../config.ts';
+import { localePath, t, type Locale } from '../../i18n/index.ts';
+
+export function getStaticPaths() {
+  return [{ params: { lang: undefined } }, { params: { lang: 'id' } }];
+}
+
+const lang: Locale = Astro.params.lang === 'id' ? 'id' : 'en';
+const d = t(lang);
+const h = d.home;
+const slideImages = [photo('hero1'), photo('hero2'), photo('hero3')];
+const slides = h.slides.map((s, i) => ({ ...s, image: slideImages[i].src }));
+const aboutA = photo('aboutA');
+const aboutB = photo('aboutB');
+const cta = photo('ctaBand');
+---
+<Base title={h.title} description={h.description}>
+  <h1 class="visually-hidden">{h.h1}</h1>
+  <HeroSlider lang={lang} slides={slides} />
+
+  <section class="section">
+    <div class="container about">
+      <div class="about__media">
+        <span class="about__bar" aria-hidden="true"></span>
+        <Image class="about__a photo-bw" src={aboutA.src} alt={aboutA.alt[lang]} widths={[480, 800]} sizes="(min-width: 60rem) 30vw, 70vw" loading="lazy" />
+        <Image class="about__b photo-bw" src={aboutB.src} alt={aboutB.alt[lang]} widths={[320, 560]} sizes="(min-width: 60rem) 20vw, 45vw" loading="lazy" />
+      </div>
+      <div>
+        <Eyebrow>{h.about.eyebrow}</Eyebrow>
+        <h2>{h.about.title}</h2>
+        <p>{h.about.text}</p>
+        <ul class="ticks">
+          {h.about.points.map((p) => (
+            <li>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#246948" /><path d="m7 12.5 3.3 3.3L17 9" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              <span><strong>{p.title}</strong> — {p.text}</span>
+            </li>
+          ))}
+        </ul>
+        <div class="row">
+          <a class="btn btn--teal" href={localePath(lang, '/about/')}>{h.about.more}</a>
+          <a class="btn btn--outline" href={config.profilePdf} download>{d.common.downloadProfile}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--navy vm">
+    <div class="container vm__grid">
+      <div class="statement">
+        <Eyebrow>{h.vm.visionLabel}</Eyebrow>
+        <p>{h.vm.vision}</p>
+      </div>
+      <div class="statement">
+        <Eyebrow>{h.vm.missionLabel}</Eyebrow>
+        <p>{h.vm.mission}</p>
+        <ul class="chips">
+          {d.values.map((v) => <li>{v.name}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--mist">
+    <div class="container">
+      <div class="center">
+        <Eyebrow>{h.areas.eyebrow}</Eyebrow>
+        <h2>{h.areas.title}</h2>
+      </div>
+      <div class="grid3">
+        {areas.map((a) => <AreaCard area={a} lang={lang} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="head">
+        <div>
+          <Eyebrow>{h.news.eyebrow}</Eyebrow>
+          <h2>{h.news.title}</h2>
+        </div>
+        <a class="btn btn--teal" href={localePath(lang, '/our-work/')}>{h.news.all}</a>
+      </div>
+      <div class="grid3">
+        {updates.map((u) => <UpdateCard update={u} lang={lang} />)}
+        <article class="people">
+          <p class="people__tag">{h.news.peopleTag}</p>
+          <h3>{h.news.peopleTitle}</h3>
+          <ul class="faces">
+            {people.map((p) => (
+              <li><Image src={personImage(p.photo)} alt="" width={48} height={48} class="face" loading="lazy" /></li>
+            ))}
+          </ul>
+          <a href={localePath(lang, '/about/team/')}>{h.news.meet} →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="collaborate">
+    <Image class="cta__img photo-bw" src={cta.src} alt="" widths={[800, 1400, 2200]} sizes="100vw" loading="lazy" />
+    <div class="cta__shade"></div>
+    <div class="container cta__body">
+      <div>
+        <Eyebrow>{h.cta.eyebrow}</Eyebrow>
+        <h2>{h.cta.title}</h2>
+        <p>{h.cta.text}</p>
+      </div>
+      <div class="cta__actions">
+        <a class="btn btn--yellow" href={config.whatsapp(lang)} target="_blank" rel="noopener">{d.common.whatsapp}</a>
+        <a class="btn btn--ghost" href={localePath(lang, '/contact/')}>{h.cta.contact}</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .about { display: grid; gap: clamp(2rem, 6vw, 5rem); align-items: center; }
+  .about__media { position: relative; padding-bottom: 3rem; max-width: 30rem; }
+  .about__bar { position: absolute; top: -0.75rem; left: -0.75rem; width: 55%; height: 1.5rem; background: var(--yellow); }
+  .about__a { width: 80%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: var(--radius); box-shadow: var(--shadow); position: relative; }
+  .about__b { position: absolute; right: 0; bottom: 0; width: 52%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); border: 6px solid #fff; box-shadow: var(--shadow); }
+  .ticks { list-style: none; padding: 0; margin: 1.5rem 0; display: grid; gap: 0.75rem; }
+  .ticks li { display: flex; gap: 0.75rem; align-items: flex-start; }
+  .ticks svg { flex: none; margin-top: 0.2rem; }
+  .row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+  .vm { position: relative; overflow: hidden; }
+  .vm::after { content: ''; position: absolute; left: 0; bottom: 0; width: min(30%, 20rem); height: 0.75rem; background: var(--teal); }
+  .vm__grid { display: grid; gap: clamp(2rem, 5vw, 4rem); }
+  .statement p { font: 600 1.375rem / 1.5 var(--font-body); margin: 0 0 1.25rem; color: #fff; }
+  .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0; margin: 0; }
+  .chips li { border: 1px solid rgb(255 255 255 / 0.5); border-radius: 99px; padding: 0.35rem 0.9rem; font-size: var(--step-small); }
+
+  .center { text-align: center; margin-bottom: 2.5rem; }
+  .center :global(.eyebrow) { justify-content: center; }
+  .grid3 { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
+  .head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1rem; margin-bottom: 2rem; }
+
+  .people { background: var(--navy-deep); color: #fff; border-radius: var(--radius); padding: 1.75rem; display: flex; flex-direction: column; gap: 1rem; }
+  .people h3 { color: #fff; margin: 0; }
+  .people__tag { color: var(--yellow); font: 700 var(--step-eyebrow) var(--font-head); text-transform: uppercase; letter-spacing: 0.1em; margin: 0; }
+  .people a { color: var(--yellow); font-weight: 700; margin-top: auto; }
+  .faces { list-style: none; display: flex; padding: 0; margin: 0; }
+  .faces li + li { margin-left: -0.6rem; }
+  .face { width: 3rem; height: 3rem; border-radius: 50%; object-fit: cover; border: 2px solid var(--navy-deep); }
+
+  .cta { position: relative; isolation: isolate; overflow: hidden; background: var(--teal); color: #fff; padding-block: clamp(3rem, 8vw, 5.5rem); }
+  .cta__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; opacity: 0.35; }
+  .cta__shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgb(26 106 109 / 0.95), rgb(26 106 109 / 0.7)); }
+  .cta__body { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 2rem; }
+  .cta h2 { color: #fff; max-width: 32rem; }
+  .cta p { max-width: 34rem; margin: 0; font-size: 1.125rem; }
+  .cta :global(.eyebrow) { color: #fff; }
+  .cta__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+  @media (min-width: 60rem) {
+    .about { grid-template-columns: 1fr 1fr; }
+    .vm__grid { grid-template-columns: 1fr 1.2fr; }
+  }
+</style>

@@ -1,0 +1,58 @@
+---
+import '@fontsource/montserrat/600.css';
+import '@fontsource/montserrat/700.css';
+import '@fontsource/montserrat/800.css';
+import '@fontsource/nunito-sans/400.css';
+import '@fontsource/nunito-sans/600.css';
+import '@fontsource/nunito-sans/700.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFab from '../components/WhatsAppFab.astro';
+import { config } from '../config.ts';
+import { altLocalePath, localePath, pathLocale, stripLocale, t } from '../i18n/index.ts';
+
+export interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props as Props;
+const pathname = Astro.url.pathname;
+const lang = pathLocale(pathname);
+const here = stripLocale(pathname);
+const abs = (l: 'en' | 'id') => new URL(localePath(l, here), config.site).href;
+const alt = altLocalePath(pathname);
+const fullTitle = here === '/' ? `${title} · COHESION` : `${title} · COHESION`;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={abs(lang)} />
+    <link rel="alternate" hreflang="en" href={abs('en')} />
+    <link rel="alternate" hreflang="id" href={abs('id')} />
+    <link rel="alternate" hreflang="x-default" href={abs('en')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="COHESION" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={abs(lang)} />
+    <meta property="og:locale" content={lang === 'id' ? 'id_ID' : 'en_US'} />
+    <meta property="og:locale:alternate" content={alt.lang === 'id' ? 'id_ID' : 'en_US'} />
+    <meta name="theme-color" content="#12304f" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t(lang).common.skip}</a>
+    <Header pathname={pathname} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer pathname={pathname} />
+    <WhatsAppFab pathname={pathname} />
+  </body>
+</html>

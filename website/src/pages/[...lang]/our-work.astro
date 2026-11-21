@@ -1,0 +1,87 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Eyebrow from '../../components/Eyebrow.astro';
+import UpdateCard from '../../components/UpdateCard.astro';
+import FocusCard from '../../components/FocusCard.astro';
+import { areas } from '../../data/areas.ts';
+import { updates } from '../../data/updates.ts';
+import { photo } from '../../data/images.ts';
+import type { PhotoKey } from '../../data/photos.ts';
+import { t, type Locale } from '../../i18n/index.ts';
+
+export function getStaticPaths() {
+  return [{ params: { lang: undefined } }, { params: { lang: 'id' } }];
+}
+
+const lang: Locale = Astro.params.lang === 'id' ? 'id' : 'en';
+const w = t(lang).work;
+const hero = photo('workHero');
+const areaPhoto: Record<string, PhotoKey> = {
+  'health-nutrition': 'health',
+  'food-system': 'food',
+  'climate-environment': 'climate',
+  'education-capacity': 'education',
+};
+const tones = ['navy', 'teal', 'green'] as const;
+const keys = ['evidence', 'technical', 'partnerships'] as const;
+---
+<Base title={w.title} description={w.description}>
+  <PageHero lang={lang} title={w.title} subtitle={w.subtitle} image={hero.src} />
+
+  <section class="section">
+    <div class="container">
+      <Eyebrow>{w.updates.eyebrow}</Eyebrow>
+      <h2>{w.updates.title}</h2>
+      <div class="grid2">
+        {updates.map((u) => <UpdateCard update={u} lang={lang} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--mist">
+    <div class="container">
+      <div class="center">
+        <Eyebrow>{w.focus.eyebrow}</Eyebrow>
+        <h2>{w.focus.title}</h2>
+      </div>
+      <div class="grid3">
+        {areas.map((a) => {
+          const key = areaPhoto[a.slug];
+          return <FocusCard area={a} lang={lang} image={key ? photo(key).src : undefined} tone={a.slug === 'monitoring-evaluation-learning' ? 'teal' : 'navy'} />;
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <Eyebrow>{w.approach.eyebrow}</Eyebrow>
+      <h2 class="narrow">{w.approach.title}</h2>
+      <div class="grid3">
+        {w.approach.items.map((it, i) => (
+          <article class:list={['approach', `approach--${tones[i]}`]} data-approach={keys[i]}>
+            <span class="approach__n">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{it.title}</h3>
+            <p>{it.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .grid2 { display: grid; gap: 1.5rem; margin-top: 2rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr)); }
+  .grid3 { display: grid; gap: 1.5rem; margin-top: 2rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
+  .center { text-align: center; }
+  .center :global(.eyebrow) { justify-content: center; }
+  .narrow { max-width: 38rem; }
+  .approach { color: #fff; border-radius: var(--radius); padding: 1.75rem; border-bottom: 4px solid var(--yellow); }
+  .approach--navy { background: var(--navy-deep); }
+  .approach--teal { background: var(--teal); }
+  .approach--green { background: var(--green); }
+  .approach__n { display: block; font: 800 2rem var(--font-head); color: var(--yellow); margin-bottom: 0.5rem; }
+  .approach h3 { color: #fff; }
+  .approach p { margin: 0; }
+</style>

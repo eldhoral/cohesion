@@ -1,0 +1,83 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PageHero from '../../../components/PageHero.astro';
+import Eyebrow from '../../../components/Eyebrow.astro';
+import IconTile from '../../../components/IconTile.astro';
+import { areas } from '../../../data/areas.ts';
+import { photo } from '../../../data/images.ts';
+import { localePath, t, type Locale } from '../../../i18n/index.ts';
+
+export function getStaticPaths() {
+  return [{ params: { lang: undefined } }, { params: { lang: 'id' } }];
+}
+
+const lang: Locale = Astro.params.lang === 'id' ? 'id' : 'en';
+const d = t(lang);
+const a = d.about;
+const hero = photo('aboutHero');
+const tiles = (['wheat', 'rice', 'salt', 'leaf', 'plate', 'school'] as const).map((icon) => ({ icon, label: a.tiles[icon] }));
+---
+<Base title={a.title} description={a.description}>
+  <PageHero lang={lang} title={a.title} subtitle={a.subtitle} image={hero.src} />
+
+  <section class="section">
+    <div class="container bg">
+      <div>
+        <Eyebrow>{a.bg.eyebrow}</Eyebrow>
+        <h2>{a.bg.title}</h2>
+        <p>{a.bg.p1}</p>
+        <p>{a.bg.p2}</p>
+      </div>
+      <div>
+        <ul class="tiles" aria-label={a.tilesLabel}>
+          {tiles.map((x) => <IconTile icon={x.icon} label={x.label} />)}
+        </ul>
+        <div class="deed">
+          <strong>{a.deed.title}</strong>
+          <span>{a.deed.by}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--mist">
+    <div class="container">
+      <Eyebrow>{a.structure.eyebrow}</Eyebrow>
+      <h2>{a.structure.title}</h2>
+      <p class="lead">{a.structure.text}</p>
+      <div class="divs">
+        {areas.map((x) => (
+          <article class="div" data-division={x.slug}>
+            <span class="div__n">{String(x.n).padStart(2, '0')}</span>
+            <h3>{x.name[lang]}</h3>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--navy">
+    <div class="container band">
+      <div>
+        <h2>{a.team.title}</h2>
+        <p>{a.team.text}</p>
+      </div>
+      <a class="btn btn--yellow" href={localePath(lang, '/about/team/')}>{a.team.button}</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .bg { display: grid; gap: clamp(2rem, 6vw, 4rem); align-items: start; }
+  .tiles { list-style: none; margin: 0 0 1rem; padding: 1.25rem; display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr)); background: var(--mist); border-radius: var(--radius); }
+  .deed { display: grid; gap: 0.2rem; padding: 1rem 1.25rem; background: var(--mist); border-radius: var(--radius); border-left: 4px solid var(--yellow); }
+  .deed span { color: var(--muted); font-size: var(--step-small); }
+  .lead { color: var(--muted); max-width: 36rem; margin-bottom: 2rem; }
+  .divs { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); }
+  .div { display: flex; gap: 1rem; align-items: center; background: #fff; border-radius: var(--radius); border-left: 4px solid var(--yellow); padding: 1.25rem; box-shadow: var(--shadow); }
+  .div__n { font: 800 1.5rem var(--font-head); color: var(--teal); }
+  .div h3 { margin: 0; font-size: 1.125rem; }
+  .band { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 2rem; }
+  .band p { margin: 0; max-width: 38rem; }
+  @media (min-width: 60rem) { .bg { grid-template-columns: 1fr 1fr; } }
+</style>

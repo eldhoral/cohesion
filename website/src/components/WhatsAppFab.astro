@@ -1,0 +1,22 @@
+---
+import { config } from '../config.ts';
+import { pathLocale, t } from '../i18n/index.ts';
+const { pathname } = Astro.props as { pathname: string };
+const lang = pathLocale(pathname);
+---
+<a class="wa-fab" href={config.whatsapp(lang)} target="_blank" rel="noopener" aria-label={t(lang).common.whatsapp}>
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+    <path d="M9 10c.5 2 2 3.5 4.5 4.5l1.3-1.3a.8.8 0 0 1 .9-.2l1.6.7a.8.8 0 0 1 .5.8c-.2 1.3-1.2 2-2.5 2C10.600 16.500 7.500 13.400 7.500 10c0-1.300.7-2.300 2-2.500a.8.8 0 0 1 .8.5l.7 1.600a.8.8 0 0 1-.2.900Z" />
+  </svg>
+</a>
+<style>
+  .wa-fab {
+    position: fixed; right: max(1rem, env(safe-area-inset-right)); bottom: max(1rem, env(safe-area-inset-bottom)); z-index: 60;
+    width: 3.5rem; height: 3.5rem; border-radius: 50%;
+    display: grid; place-items: center;
+    background: #1b7f4b; color: #fff; box-shadow: 0 8px 24px -6px rgb(0 0 0 / 0.45);
+    transition: transform 0.2s var(--ease);
+  }
+  .wa-fab:hover { transform: scale(1.08); color: #fff; }
+</style>

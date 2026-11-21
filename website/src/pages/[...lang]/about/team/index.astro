@@ -1,0 +1,56 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import PageHero from '../../../../components/PageHero.astro';
+import PersonCard from '../../../../components/PersonCard.astro';
+import AdvisorCard from '../../../../components/AdvisorCard.astro';
+import { teamGroups } from '../../../../data/people.ts';
+import { advisors } from '../../../../data/advisors.ts';
+import { photo } from '../../../../data/images.ts';
+import { t, type Locale } from '../../../../i18n/index.ts';
+
+export function getStaticPaths() {
+  return [{ params: { lang: undefined } }, { params: { lang: 'id' } }];
+}
+
+const lang: Locale = Astro.params.lang === 'id' ? 'id' : 'en';
+const other: Locale = lang === 'en' ? 'id' : 'en';
+const d = t(lang);
+const hero = photo('aboutHero');
+---
+<Base title={d.team.title} description={d.team.description}>
+  <PageHero lang={lang} title={d.team.title} subtitle={d.team.subtitle} image={hero.src} />
+
+  {teamGroups.map((g) => (
+    <section class="section group" data-group={g.key}>
+      <div class="container">
+        <header class="group__head">
+          <h2>{g.title[lang]}</h2>
+          <span class="group__alt" lang={other}>{g.title[other]}</span>
+        </header>
+        {g.key === 'advisors' ? (
+          <>
+            <div class="advisors">
+              {advisors.map((a) => <AdvisorCard advisor={a} lang={lang} />)}
+            </div>
+            <p class="note">{d.team.advisorsNote}</p>
+          </>
+        ) : (
+          <div class="people">
+            {g.people?.map((p) => <PersonCard person={p} lang={lang} />)}
+          </div>
+        )}
+      </div>
+    </section>
+  ))}
+</Base>
+
+<style>
+  .group + .group { border-top: 1px solid var(--line); }
+  .group:nth-of-type(even) { background: var(--mist); }
+  .group__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1rem; margin-bottom: 2rem; }
+  .group__head h2 { margin: 0; }
+  .group__alt { color: var(--teal); font: 600 1rem var(--font-head); }
+  .people { display: grid; gap: 2rem 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); }
+  .advisors { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); }
+  .note { margin: 1.5rem 0 0; color: var(--muted); font-size: var(--step-small); }
+</style>

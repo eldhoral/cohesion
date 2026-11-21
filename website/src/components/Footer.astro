@@ -1,0 +1,61 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-mark.png';
+import { config } from '../config.ts';
+import { localePath, pathLocale, t } from '../i18n/index.ts';
+
+const { pathname } = Astro.props as { pathname: string };
+const lang = pathLocale(pathname);
+const d = t(lang);
+const links = [
+  { href: '/', label: d.nav.home },
+  { href: '/about/', label: d.nav.about },
+  { href: '/our-work/', label: d.nav.work },
+  { href: '/resources/', label: d.nav.resources },
+  { href: '/contact/', label: d.nav.contact },
+];
+---
+<footer class="footer">
+  <div class="container footer__grid">
+    <div>
+      <a class="brand" href={localePath(lang, '/')}>
+        <Image src={logo} alt="" width={44} height={44} />
+        <span>COHESION</span>
+      </a>
+      <p class="footer__tag">{d.footer.tagline}</p>
+      <a class="btn btn--yellow" href={config.profilePdf} download>{d.common.downloadProfile}</a>
+    </div>
+    <div>
+      <h2 class="footer__h">{d.footer.address}</h2>
+      <address>{config.address}</address>
+    </div>
+    <div>
+      <h2 class="footer__h">{d.footer.contact}</h2>
+      <p><a href={`mailto:${config.email}`}>{config.email}</a></p>
+      <p><a href={config.phoneHref}>{config.phone}</a></p>
+      {config.linkedin && <p><a href={config.linkedin} rel="noopener">LinkedIn</a></p>}
+    </div>
+    <nav aria-label={d.footer.menu}>
+      <h2 class="footer__h">{d.footer.menu}</h2>
+      <ul>
+        {links.map((l) => <li><a href={localePath(lang, l.href)}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+  <div class="container footer__legal">{d.footer.rights} · {d.common.photosCredit}</div>
+</footer>
+
+<style>
+  .footer { background: var(--navy-deep); color: #dbe6ef; padding-top: 3.5rem; }
+  .footer a { color: #fff; }
+  .footer a:hover { color: var(--yellow); }
+  .footer .btn--yellow { color: var(--navy-deep); }
+  .footer__grid { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
+  .brand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; font: 800 1.25rem var(--font-head); margin-bottom: 1rem; }
+  .footer__tag { max-width: 22rem; font-size: var(--step-small); }
+  .footer__h { font: 700 var(--step-eyebrow) var(--font-head); letter-spacing: 0.14em; text-transform: uppercase; color: var(--yellow); margin-bottom: 1rem; }
+  address { font-style: normal; max-width: 20rem; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li a { display: inline-block; padding: 0.4rem 0; }
+  .footer__legal { margin-top: 2.5rem; padding-block: 1.25rem; border-top: 1px solid rgb(255 255 255 / 0.15); font-size: var(--step-small); }
+</style>
